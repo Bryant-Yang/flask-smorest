@@ -212,13 +212,13 @@ class APISpecMixin(DocBlueprintMixin):
         self.ma_plugin.converter.add_attribute_function(uploadfield2properties)
 
         # Lazy register default responses
-        self._register_responses()
+        # self._register_responses()
 
         # Lazy register ETag headers
-        self._register_etag_headers()
+        # self._register_etag_headers()
 
         # Lazy register pagination header
-        self._register_pagination_header()
+        # self._register_pagination_header()
 
         # Register OpenAPI command group
         self._app.cli.add_command(openapi_cli)

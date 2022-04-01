@@ -92,8 +92,8 @@ class Blueprint(
         self._prepare_doc_cbks = [
             self._prepare_arguments_doc,
             self._prepare_response_doc,
-            self._prepare_pagination_doc,
-            self._prepare_etag_doc,
+            # self._prepare_pagination_doc,
+            # self._prepare_etag_doc,
         ]
 
     def add_url_rule(
