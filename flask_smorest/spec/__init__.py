@@ -136,7 +136,7 @@ class DocBlueprintMixin:
 class APISpecMixin(DocBlueprintMixin):
     """Add APISpec related features to Api class"""
 
-    DEFAULT_ERROR_RESPONSE_NAME = None # "DEFAULT_ERROR"
+    DEFAULT_ERROR_RESPONSE_NAME = "DEFAULT_ERROR"
 
     DEFAULT_REQUEST_BODY_CONTENT_TYPE = "application/json"
     DEFAULT_RESPONSE_CONTENT_TYPE = "application/json"
@@ -312,13 +312,11 @@ class APISpecMixin(DocBlueprintMixin):
             prepare_response(response, self.spec, self.DEFAULT_RESPONSE_CONTENT_TYPE)
             self.spec.components.response(status.name, response, lazy=True)
 
-        # Also lazy register a default error response
         response = {
-            "description": "Default error response",
-            "schema": self.ERROR_SCHEMA,
+            "description": "Successful Response",
         }
         prepare_response(response, self.spec, self.DEFAULT_RESPONSE_CONTENT_TYPE)
-        self.spec.components.response("DEFAULT_ERROR", response, lazy=True)
+        self.spec.components.response("DEFAULT", response, lazy=True)
 
     def _register_etag_headers(self):
         self.spec.components.parameter(

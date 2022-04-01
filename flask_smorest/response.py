@@ -250,11 +250,10 @@ class ResponseMixin:
     @staticmethod
     def _prepare_response_doc(doc, doc_info, *, api, spec, **kwargs):
         operation = doc_info.get("response", {})
-        # Document default error response
-        if api.DEFAULT_ERROR_RESPONSE_NAME:
-            operation.setdefault("responses", {})[
-                "default"
-            ] = api.DEFAULT_ERROR_RESPONSE_NAME
+        operation.setdefault("responses", {})[
+            "200"
+        ] = "DEFAULT"
+
         if operation:
             # OAS 2: set "produces"
             # TODO: The list of content types should contain those used by other
