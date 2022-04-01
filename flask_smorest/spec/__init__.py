@@ -212,7 +212,7 @@ class APISpecMixin(DocBlueprintMixin):
         self.ma_plugin.converter.add_attribute_function(uploadfield2properties)
 
         # Lazy register default responses
-        # self._register_responses()
+        self._register_responses()
 
         # Lazy register ETag headers
         # self._register_etag_headers()
@@ -307,8 +307,6 @@ class APISpecMixin(DocBlueprintMixin):
             response = {
                 "description": status.phrase,
             }
-            if not (100 <= status < 200) and status not in (204, 304):
-                response["schema"] = self.ERROR_SCHEMA
             prepare_response(response, self.spec, self.DEFAULT_RESPONSE_CONTENT_TYPE)
             self.spec.components.response(status.name, response, lazy=True)
 
