@@ -136,7 +136,7 @@ class DocBlueprintMixin:
 class APISpecMixin(DocBlueprintMixin):
     """Add APISpec related features to Api class"""
 
-    DEFAULT_ERROR_RESPONSE_NAME = "DEFAULT_ERROR"
+    DEFAULT_ERROR_RESPONSE_NAME = None # "DEFAULT_ERROR"
 
     DEFAULT_REQUEST_BODY_CONTENT_TYPE = "application/json"
     DEFAULT_RESPONSE_CONTENT_TYPE = "application/json"
