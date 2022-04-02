@@ -108,13 +108,7 @@ class ResponseMixin:
                 appcontext["result_raw"] = result_raw
                 appcontext["result_dump"] = result_dump
 
-                # Build response
-                resp = jsonify(self._prepare_response_content(result_dump))
-                set_status_and_headers_in_response(resp, r_status_code, r_headers)
-                if r_status_code is None:
-                    resp.status_code = status_code
-
-                return resp
+                return result_dump
 
             # Store doc in wrapper function
             # The deepcopy avoids modifying the wrapped function doc
@@ -251,7 +245,7 @@ class ResponseMixin:
     def _prepare_response_doc(doc, doc_info, *, api, spec, **kwargs):
         operation = doc_info.get("response", {})
         operation.setdefault("responses", {})[
-            "200"
+            "default"
         ] = "DEFAULT"
 
         if operation:
