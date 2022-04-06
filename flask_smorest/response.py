@@ -6,7 +6,7 @@ from functools import wraps
 import http
 
 from werkzeug import Response
-from flask import jsonify
+import marshmallow as ma
 
 from .utils import (
     deepupdate,
@@ -67,7 +67,13 @@ class ResponseMixin:
             schema = schema()
 
         # Document response (schema, description,...) in the API doc
-        doc_schema = self._make_doc_response_schema(schema)
+        doc_schema = ma.Schema.from_dict(
+            {
+                'data': ma.fields.Nested(schema),
+                'status': ma.fields.Int()
+            }, name='Wrap' + schema.__class__.__name__
+        ) if schema else None
+
         if description is None:
             description = http.HTTPStatus(int(status_code)).phrase
         resp_doc = remove_none(
@@ -100,6 +106,10 @@ class ResponseMixin:
                 # Dump result with schema if specified
                 if schema is None:
                     result_dump = result_raw
+                elif isinstance(result_raw, dict):
+                    # load from dict and then dump to dict,
+                    # just for load validation instead of directly returning
+                    result_dump = schema.dump(schema.load(result_raw))
                 else:
                     result_dump = schema.dump(result_raw)
 
